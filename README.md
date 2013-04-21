@@ -1,6 +1,6 @@
 # Plock
 
-TODO: Write a gem description
+'p { 1 + 1 }` prints "(1 + 1) #=> 2". That's all.
 
 ## Installation
 
@@ -16,9 +16,10 @@ Or install it yourself as:
 
     $ gem install plock
 
-## Usage
+## Known Bugs
+**Important Note:** Plock depends on [sourcify](https://github.com/ngty/sourcify) (so far), it has a big restriction:
 
-TODO: Write usage instructions here
+- You can't use on REPLs such as pry, irb and so on: you have to use p/pp in a source code saved on the disk.
 
 ## Contributing
 
