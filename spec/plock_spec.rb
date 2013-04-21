@@ -2,7 +2,7 @@ require 'plock'
 
 describe Plock do
   describe '.inspect ' do
-    subject { described_class.inspect { 1 + 1 } }
+    subject { described_class.inspect_block { 1 + 1 } }
     it { should eq '1 + 1 #=> 2' }
   end
   describe '#p' do
