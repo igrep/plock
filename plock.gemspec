@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Plock::VERSION
   spec.authors       = ["Yamamoto Yuji"]
   spec.email         = ["whosekiteneverfly@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{'p { 1 + 1 }` prints "1 + 1 #=> 2". That's all.}
+  spec.summary       = %q{'p { 1 + 1 }` prints "1 + 1 #=> 2". That's all.}
+  spec.homepage      = "https://github.com/igrep/plock"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
