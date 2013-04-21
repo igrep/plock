@@ -1,9 +1,12 @@
 require 'plock'
 
 describe Plock do
-  describe '.inspect ' do
-    subject { described_class.inspect_block { 1 + 1 } }
-    it { should eq ['(1 + 1)', 2] }
+  describe '.inspect_block ' do
+    subject do
+      a = 1
+      described_class.inspect_block { a + 1 }
+    end
+    it { should eq ['(a + 1)', 2] }
   end
   describe '#p' do
     subject { p { 1 + 1 } }
