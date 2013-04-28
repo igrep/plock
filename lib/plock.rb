@@ -5,7 +5,9 @@ require "plock/version"
 
 module Plock
   module Format
-    DEFAULT_FORMAT = '%b #=> %r'
+    PERCENT_B = '%b'.freeze
+    PERCENT_R = '%r'.freeze
+    DEFAULT_FORMAT = "#{PERCENT_B} #=> #{PERCENT_R}"
   end
 
   class << self
@@ -35,8 +37,8 @@ module Plock
 
     def format block_source, block_result
       self.output_format.dup.tap do|format_string|
-        format_string.sub! '%b', block_source
-        format_string.sub! '%r', block_result.inspect
+        format_string.sub! self::Format::PERCENT_B, block_source
+        format_string.sub! self::Format::PERCENT_R, block_result.inspect
       end
     end
   end
