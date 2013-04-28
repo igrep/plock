@@ -19,7 +19,7 @@ describe Kernel do
   describe '#p' do
     subject { p { 1 + 1 } }
     it { should be 2 }
-    it 'calls Plock.inspect' do
+    it 'calls Plock.inspect_block' do
       Plock.should_receive :inspect_block
       p { 1 + 1 }
     end
