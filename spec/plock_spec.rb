@@ -8,6 +8,8 @@ describe Plock do
     end
     it { should eq ['(a + 1)', 2] }
   end
+end
+describe Kernel do
   describe '#p' do
     subject { p { 1 + 1 } }
     it { should be 2 }
