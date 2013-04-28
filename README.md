@@ -1,6 +1,6 @@
 # Plock
 
-'p { 1 + 1 }` prints "(1 + 1) #=> 2". That's all.
+p + block = plock. 'p { 1 + 1 }` prints "(1 + 1) #=> 2". That's all.
 
 ## Installation
 
