@@ -8,7 +8,13 @@ describe Plock do
     end
     it { should eq ['(a + 1)', 2] }
   end
+  describe '.format' do
+    context 'Plock.output_format = "%b #=> %r"'
+    subject { described_class.format '(a + 1)', 2 }
+    it { should eq '(a + 1) #=> 2' }
+  end
 end
+
 describe Kernel do
   describe '#p' do
     subject { p { 1 + 1 } }
