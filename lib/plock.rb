@@ -4,24 +4,43 @@ require 'pp'
 require "plock/version"
 
 module Plock
-  def self.inspect_block( attached = :inspect_block, &block )
-    result = block.call
-    [ block.to_source( attached_to: attached, strip_enclosure: true ), result ]
+  module Format
+    DEFAULT_FORMAT = '%b #=> %r'
   end
 
-  def self.print_block( printer, pprinter, attached = :print_block, *args, &block )
-    returned = []
+  class << self
+    attr_writer :output_format
+    def output_format
+      @output_format ||= self::Format::DEFAULT_FORMAT
+    end
 
-    __send__( pprinter, *args )
-    returned.concat args
+    def inspect_block( attached = :inspect_block, &block )
+      result = block.call
+      [ block.to_source( attached_to: attached, strip_enclosure: true ), result ]
+    end
 
-    block_source, block_result = Plock.inspect_block( attached, &block )
-    __send__( printer, block_source )
-    __send__( pprinter, block_result )
-    returned << block_result
+    def print_block( printer, pprinter, attached = :print_block, *args, &block )
+      returned = []
 
-    returned.length > 1 ? returned : returned.first
+      __send__( pprinter, *args )
+      returned.concat args
+
+      block_source, block_result = Plock.inspect_block( attached, &block )
+      __send__( printer, block_source )
+      __send__( pprinter, block_result )
+      returned << block_result
+
+      returned.length > 1 ? returned : returned.first
+    end
+
+    def format block_source, block_result
+      self.output_format.dup.tap do|format_string|
+        format_string.sub! '%b', block_source
+        format_string.sub! '%r', block_result.inspect
+      end
+    end
   end
+
 end
 
 module Kernel # reopen
