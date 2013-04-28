@@ -12,6 +12,11 @@ describe Plock do
     context 'Plock.output_format = "%b #=> %r"'
     subject { described_class.format '(a + 1)', 2 }
     it { should eq '(a + 1) #=> 2' }
+    it 'never changes the output_format desructively' do
+      described_class.output_format = '%b and %r SHOULD NOT BE CHANGED'
+      described_class.format 'block', 'result'
+      described_class.output_format.should eq '%b and %r SHOULD NOT BE CHANGED'
+    end
   end
 end
 
