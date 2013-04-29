@@ -1,4 +1,5 @@
 require 'plock'
+require 'stringio'
 
 describe Plock do
   describe '.inspect_block ' do
@@ -20,13 +21,20 @@ describe Plock do
   end
 end
 
+RSpec::Matchers.define :include_when_ignoring_space_difference do|expected|
+  match do|actual|
+    expected.gsub( /\s+/, '' ).include? actual.gsub( /\s+/, '' )
+  end
+end
+
 describe Kernel do
   describe '#p' do
+    before( :all ) { $stdin = StringIO.new '', 'wb' } # replaces the stdin for testing the output of p
     subject { p { 1 + 1 } }
     it { should be 2 }
-    it 'calls Plock.inspect_block' do
-      Plock.should_receive :inspect_block
-      p { 1 + 1 }
+    it 'prints out the expression and result onto stdin' do
+      $stdin.string.should include_when_ignoring_space_difference '(1 + 1) #=> 2'
     end
+    after( :all ) { $stdin = STDIN } # restore default stdin
   end
 end
