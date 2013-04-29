@@ -36,10 +36,10 @@ module Plock
     end
 
     def format block_source, block_result
-      self.output_format.dup.tap do|format_string|
-        format_string.sub! self::Format::PERCENT_B, block_source
-        format_string.sub! self::Format::PERCENT_R, block_result.inspect
-      end
+      result = self.output_format.dup
+      result.sub! self::Format::PERCENT_B, block_source
+      result.sub! self::Format::PERCENT_R, block_result.inspect
+      return result
     end
   end
 
