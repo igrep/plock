@@ -35,11 +35,21 @@ module Plock
       returned.length > 1 ? returned : returned.first
     end
 
-    def format block_source, block_result
+    def format_with block_source, block_result, inspect_method
       result = self.output_format.dup
       result.sub! self::Format::PERCENT_B, block_source
-      result.sub! self::Format::PERCENT_R, block_result.inspect
+      result.sub! self::Format::PERCENT_R, block_result.__send__( inspect_method )
       return result
+    end
+
+    def format block_source, block_result
+      self.format_with block_source, block_result, :inspect
+    end
+
+    if Object.public_method_defined? :pretty_inspect
+      def pretty_format block_source, block_result
+        self.format_with block_source, block_result, :pretty_inspect
+      end
     end
   end
 
