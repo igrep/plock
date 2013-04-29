@@ -11,6 +11,7 @@ describe Plock do
   end
   describe '.format' do
     context 'when Plock.output_format = "%b #=> %r"' do
+      before { described_class.output_format = "%b #=> %r" }
       subject { described_class.format '(a + 1)', 2 }
       it { should eq '(a + 1) #=> 2' }
       it 'never changes the output_format desructively' do
@@ -31,10 +32,14 @@ end
 describe Kernel do
   describe '#p' do
     before( :all ) { $stdin = StringIO.new '', 'wb' } # replaces the stdin for testing the output of p
-    subject { p { 1 + 1 } }
-    it { should be 2 }
-    it 'prints out the expression and result onto stdin' do
-      $stdin.string.should include_when_ignoring_space_difference '(1 + 1) #=> 2'
+    context 'when Plock.output_format = "%b #=> %r"' do
+      before( :all ) { Plock.output_format = "%b #=> %r" }
+      let( :no_percent ){ Plock.output_format.gsub( /%[br]/, '' ) }
+      subject { p { 1 + 1 } }
+      it { should be 2 }
+      it 'prints out the expression and result onto stdin' do
+        $stdin.string.should include_when_ignoring_space_difference "(1 + 1) #{no_percent} 2"
+      end
     end
     after( :all ) { $stdin = STDIN } # restore default stdin
   end
