@@ -21,17 +21,15 @@ module Plock
       [ block.to_source( attached_to: attached, strip_enclosure: true ), result ]
     end
 
-    def print_block( printer, pprinter, attached = :print_block, *args, &block )
+    def print_block_with formatter_method, attached, *args, &block
       returned = []
-
-      __send__( pprinter, *args )
       returned.concat args
 
       block_source, block_result = Plock.inspect_block( attached, &block )
-      __send__( printer, block_source )
-      __send__( pprinter, block_result )
-      returned << block_result
 
+      puts self.__send__( formatter_method, block_source, block_result )
+
+      returned << block_result
       returned.length > 1 ? returned : returned.first
     end
 
@@ -58,14 +56,22 @@ end
 module Kernel # reopen
   alias p_without_plock p
   def p_with_plock *args, &block
-    Plock.print_block( :puts, :p_without_plock, :p, *args, &block )
+    if block_given?
+      Plock.print_block_with :format, :p, *args, &block
+    else
+      p_without_plock( *args )
+    end
   end
   alias p p_with_plock
 
   if Kernel.private_method_defined? :pp
     alias pp_without_plock pp
     def pp_with_plock
-      Plock.print_block( :puts, :pp_without_plock, :pp, *args, &block )
+      if block_given?
+        Plock.print_block_with :pretty_format, :pp, *args, &block
+      else
+        pp_without_plock( *args )
+      end
     end
     alias pp pp_with_plock
   end
