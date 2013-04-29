@@ -31,16 +31,16 @@ end
 
 describe Kernel do
   describe '#p' do
-    before( :all ) { $stdin = StringIO.new '', 'wb' } # replaces the stdin for testing the output of p
+    before( :all ) { $stdout = StringIO.new '', 'wb' } # replaces the stdin for testing the output of p
     context 'when Plock.output_format = "%b #=> %r"' do
       before( :all ) { Plock.output_format = "%b #=> %r" }
       let( :no_percent ){ Plock.output_format.gsub( /%[br]/, '' ) }
       subject { p { 1 + 1 } }
       it { should be 2 }
-      it 'prints out the expression and result onto stdin' do
-        $stdin.string.should include_when_ignoring_space_difference "(1 + 1) #{no_percent} 2"
+      it 'prints out the block and its result onto stdin' do
+        $stdout.string.should include_when_ignoring_space_difference "(1 + 1) #{no_percent} 2"
       end
     end
-    after( :all ) { $stdin = STDIN } # restore default stdin
+    after( :all ) { $stdout = STDOUT } # restore default stdin
   end
 end
