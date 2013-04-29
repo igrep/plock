@@ -7,7 +7,7 @@ module Plock
   module Format
     PERCENT_B = '%b'.freeze
     PERCENT_R = '%r'.freeze
-    DEFAULT_FORMAT = "#{PERCENT_B} #=> #{PERCENT_R}"
+    DEFAULT_FORMAT = "#{PERCENT_B} #=> #{PERCENT_R}".freeze
   end
 
   class << self
