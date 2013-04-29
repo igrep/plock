@@ -62,9 +62,11 @@ module Kernel # reopen
   end
   alias p p_with_plock
 
-  alias pp_without_plock pp
-  def pp_with_plock
-    Plock.print_block( :puts, :pp_without_plock, :pp, *args, &block )
+  if Kernel.private_method_defined? :pp
+    alias pp_without_plock pp
+    def pp_with_plock
+      Plock.print_block( :puts, :pp_without_plock, :pp, *args, &block )
+    end
+    alias pp pp_with_plock
   end
-  alias pp pp_with_plock
 end
