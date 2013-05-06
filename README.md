@@ -2,19 +2,9 @@
 
 p + block = plock. 'p { 1 + 1 }` prints "(1 + 1) #=> 2". That's all.
 
-## Installation
+# Usage
 
-Add this line to your application's Gemfile:
-
-    gem 'plock'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install plock
+After installing by gem install command, Try sample/sample.rb with your Ruby. You can get it soon.
 
 ## Known Bugs
 **Important Note:** Plock depends on [sourcify](https://github.com/ngty/sourcify) (so far), it has a big restriction:
