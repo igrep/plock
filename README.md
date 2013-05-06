@@ -9,7 +9,8 @@ After installing by gem install command, Try sample/sample.rb with your Ruby. Yo
 ## Known Bugs
 **Important Note:** Plock depends on [sourcify](https://github.com/ngty/sourcify) (so far), it has a big restriction:
 
-- You can't use on REPLs such as pry, irb and so on: you have to use p/pp in a source code saved on the disk.
+- Can't use on REPLs such as pry, irb and so on: you have to use p/pp in a source code saved on the disk.
+- You can put p-with-block ONLY ONCE PER LINE. Otherwise you'll get Sourcify::MultipleMatchingProcsPerLineError.
 
 ## Contributing
 
