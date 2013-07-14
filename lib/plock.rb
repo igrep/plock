@@ -21,7 +21,7 @@ module Plock
       [ block.to_source( attached_to: attached, strip_enclosure: true ), result ]
     end
 
-    def print_block_with formatter_method, attached, *args, &block
+    def print_block_with formatter_method, attached, &block
       block_source, block_result = Plock.inspect_block( attached, &block )
       puts self.__send__( formatter_method, block_source, block_result )
       block_result
@@ -52,7 +52,7 @@ module Kernel # reopen
   def p_with_plock *args, &block
     returned_by_p = p_without_plock( *args )
     if block_given?
-      Plock.print_block_with :format, :p, *args, &block
+      Plock.print_block_with :format, :p, &block
     else
       returned_by_p
     end
@@ -64,7 +64,7 @@ module Kernel # reopen
     def pp_with_plock
       returned_by_pp = pp_without_plock( *args )
       if block_given?
-        Plock.print_block_with :pretty_format, :pp, *args, &block
+        Plock.print_block_with :pretty_format, :pp, &block
       else
         returned_by_pp
       end
