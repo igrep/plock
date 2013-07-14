@@ -43,7 +43,10 @@ describe Kernel do
     context 'when Plock.output_format = "%b #=> %r"' do
       before( :all ) { Plock.output_format = "%b #=> %r" }
       let( :no_percent ){ Plock.output_format.gsub( /%[br]/, '' ) }
+
       subject { p { 1 + 1 } }
+      before { subject }
+
       it { should be 2 }
       it "prints out the block and the block's result onto stdin" do
         $stdout.string.should include_when_ignoring_space_difference "(1 + 1) #{no_percent} 2"
@@ -51,6 +54,7 @@ describe Kernel do
 
       context 'given both argument and block' do
         subject { p( 'one plus one' ) { 1 + 1 } }
+
         it { should be 2 }
         it 'prints out its arguments, its block, and the result onto stdin' do
           $stdout.string.should equals_when_ignoring_space_difference %Q'"one plus one" (1 + 1) #{no_percent} 2'
