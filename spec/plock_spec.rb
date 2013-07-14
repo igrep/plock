@@ -45,7 +45,7 @@ describe Kernel do
       let( :no_percent ){ Plock.output_format.gsub( /%[br]/, '' ) }
       subject { p { 1 + 1 } }
       it { should be 2 }
-      it 'prints out the block and its result onto stdin' do
+      it "prints out the block and the block's result onto stdin" do
         $stdout.string.should include_when_ignoring_space_difference "(1 + 1) #{no_percent} 2"
       end
 
