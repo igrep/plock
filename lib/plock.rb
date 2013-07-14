@@ -61,7 +61,7 @@ module Kernel # reopen
 
   if Kernel.private_method_defined? :pp
     alias pp_without_plock pp
-    def pp_with_plock
+    def pp_with_plock *args, &block
       returned_by_pp = pp_without_plock( *args )
       if block_given?
         Plock.print_block_with :pretty_format, :pp, &block
