@@ -1,4 +1,4 @@
-Copyright (c) 2013 Yamamoto Yuji
+Copyright (c) 2013 Yuji Yamamoto
 
 MIT License
 
